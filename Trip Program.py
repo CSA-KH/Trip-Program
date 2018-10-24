@@ -2,6 +2,8 @@
 #Advanced Computer Programming (10)
 #10/22/18
 
+#V 1.0.0
+
 '''
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,44 +30,47 @@ spinval = StringVar()
 
 #functions
 def check():
-    a = str(IListbox.curselection()).replace('(', '').replace(')', '').replace(',', '')  # List Box value
-    if IListbox.curselection() == () or travel.get() == '' or D.get('1.0','end-1c') == '':
-     topC = Toplevel()  #C = correction, basically an error message
-     topC.title('Error')
-     topC.minsize(width=100, height=50)
-     topC.resizable(width=FALSE, height=FALSE)
-     msgC = Message(topC, text = 'You did not fill out all of the options')
-     msgC.pack()
-     buttonE = Button(topC, text="Close", command=topC.destroy)
-     buttonE.pack()
-     pass
-    else:
-     savedata()
+   if IListbox.curselection() == () or travel.get() == '':
+    topC = Toplevel()  #C = correction, basically an error message
+    topC.title('Error')
+    topC.minsize(width=100, height=50)
+    topC.resizable(width=FALSE, height=FALSE)
+    msgC = Message(topC, text = 'You did not fill out all of the options')
+    msgC.pack()
+    buttonE = Button(topC, text="Close", command=topC.destroy)
+    buttonE.pack()
+    pass
+   else:
+    savedata()
 
 def clear():
-    IListbox.select_clear(0,END)
+   IListbox.select_clear(0,END)
+   D.delete('1.0','end-1c')
+   travel.set('')
 
 def savedata():
-    a = str(IListbox.curselection()).replace('(','').replace(')','').replace(',','').replace('"','')  #List Box value
+   a = str(IListbox.curselection()).replace('(','').replace(')','').replace(',','').replace('"','')  #List Box value
 
-    TripL = open('Trip_Logger','a')
-    TripL.write(IListbox.get(first=int(a), last=None) + '\n')
-    TripL.write(travel.get() + '\n')
-    TripL.write(SBMonth.get()+'\n')
-    TripL.write(D.get('1.0','end-1c')+'\n\n')
-    TripL.close()
+   TripL = open('Trip_Logger','a')
+   TripL.write(IListbox.get(first=int(a), last=None) + '\n')
+   TripL.write(travel.get() + '\n')
+   TripL.write(SBMonth.get()+'\n')
+   TripL.write(D.get('1.0','end-1c')+'\n\n')
+   TripL.close()
+
+   clear()
 
 def about():
-    top = Toplevel()
-    top.title("About")
-    top.minsize(width=200, height=150)
-    top.resizable(width = FALSE, height = FALSE)
-    msg = Message(top, text='About us:')
-    msg2 = Message(top, text='This is a program that we are making to practice how to use entry boxes on the top. The program is supposed to be a travel logger that any user will enter in where they want, and all of the other options.')
-    msg.pack()
-    msg2.pack()
-    button = Button(top, text="Close", command=top.destroy)
-    button.pack()
+   top = Toplevel()
+   top.title("About")
+   top.minsize(width=200, height=100)
+   top.resizable(width = FALSE, height = FALSE)
+   msg = Message(top, text='About')
+   msg2 = Message(top, text='V 1.0.2\nKeenan Hui\n\nAdded the clear after clicking the subbmit button and made months as read only.\n\nThe program is a trip logger where you can input where you went, how the trip was, when you want there, and how you got there.')
+   msg.pack()
+   msg2.pack()
+   button = Button(top, text="Close", command=top.destroy)
+   button.pack()
 
 #Entry Box
 menubar = Menu(root)
@@ -110,7 +115,7 @@ TripCB.bind("<<ComboboxSelected>>")
 TripCB.grid(row = 3, column = 0, sticky = (N,S,E,W))
 
 #Spinbox for month
-SBMonth = Spinbox(root, values=('January','February','March','April','May','June','July','August','September','October','November','December') , textvariable=spinval, wrap = TRUE)
+SBMonth = Spinbox(root, values=('January','February','March','April','May','June','July','August','September','October','November','December') , textvariable=spinval, wrap = TRUE, state = 'readonly')
 SBMonth.grid(column = 0, row = 4,sticky = NSEW)
 
 #Buttons
@@ -129,7 +134,6 @@ root.grid_columnconfigure(3, weight=1)
 root.grid_columnconfigure(4, weight=1)
 root.grid_rowconfigure(0, weight=1)
 root.grid_rowconfigure(1, weight=1)
-root.grid_rowconfigure(2, weight=1)
 root.grid_rowconfigure(3, weight=1)
 root.grid_rowconfigure(4, weight=1)
 
@@ -138,7 +142,5 @@ root.minsize(width = 350, height = 270)
 root.title('Trip Program')
 root.mainloop()
 root.destroy()
-
-
 
 

@@ -2,7 +2,7 @@
 #Advanced Computer Programming (10)
 #10/22/18
 
-#V 1.0.0
+#V 1.0.2
 
 '''
 This program is free software: you can redistribute it and/or modify

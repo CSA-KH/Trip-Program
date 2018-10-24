@@ -44,9 +44,15 @@ def check():
     savedata()
 
 def clear():
+<<<<<<< HEAD
    IListbox.select_clear(0,END)
    D.delete('1.0','end-1c')
    travel.set('')
+=======
+    IListbox.select_clear(0,END)
+    D.delete('1.0','end-1c')
+    travel.set('')
+>>>>>>> b60ff299c64d5e36a3e98bb0b1ef8c5d9d6e4425
 
 def savedata():
    a = str(IListbox.curselection()).replace('(','').replace(')','').replace(',','').replace('"','')  #List Box value
